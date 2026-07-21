@@ -7,10 +7,10 @@ from sqlalchemy.orm.attributes import get_history
 from sqlalchemy.orm.util import AliasedClass
 
 from ._compat import (
+    get_declarative_base,
     get_primary_keys,
     identity,
     naturally_equivalent,
-    get_declarative_base,
 )
 from .exc import ClassNotVersioned
 

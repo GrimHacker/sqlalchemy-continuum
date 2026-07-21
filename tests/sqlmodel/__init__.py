@@ -1,15 +1,19 @@
 import os
 from typing import Union
-import sqlmodel
-from sqlmodel import Field, Relationship, Session
-import sqlalchemy as sa
-from sqlalchemy_continuum import make_versioned
-from sqlalchemy_continuum import versioning_manager
 
+import pytest
+import sqlalchemy as sa
+
+from sqlalchemy_continuum import make_versioned, versioning_manager
 from sqlalchemy_continuum.exc import ClassNotVersioned
 from sqlalchemy_continuum.transaction import TransactionFactory
 from sqlalchemy_continuum.utils import version_class
 from tests import TestCase, get_driver_name, get_url_from_driver
+
+sqlmodel = pytest.importorskip('sqlmodel')
+Field = sqlmodel.Field
+Relationship = sqlmodel.Relationship
+Session = sqlmodel.Session
 
 
 class SQLModelTestCase(TestCase):
@@ -88,7 +92,7 @@ class SQLModelTestCase(TestCase):
 
             id: int = Field(sa_type=sa.Integer, primary_key=True)
             name: str = Field(sa_type=sa.Unicode(255))
-            article_id: Union[int, None] = Field(default=None, foreign_key='article.id')
+            article_id: int | None = Field(default=None, foreign_key='article.id')
             article: Article = Relationship(back_populates='tags')
 
         self.Article = Article

@@ -1,7 +1,9 @@
-from sqlmodel import Field, Relationship
 from typing import Union
-from tests.sqlmodel import SQLModelTestCase
+
 import sqlalchemy as sa
+from sqlmodel import Field, Relationship
+
+from tests.sqlmodel import SQLModelTestCase
 
 
 class TestRelationshipToNonVersionedClass(SQLModelTestCase):
@@ -9,9 +11,7 @@ class TestRelationshipToNonVersionedClass(SQLModelTestCase):
         class User(self.Model, table=True):
             __tablename__ = 'user'
 
-            id: Union[int, None] = Field(
-                sa_type=sa.Integer, default=None, primary_key=True
-            )
+            id: int | None = Field(sa_type=sa.Integer, default=None, primary_key=True)
             name: str = Field(sa_type=sa.Unicode(255))
             articles: list['Article'] = Relationship(back_populates='author')
 
@@ -19,13 +19,11 @@ class TestRelationshipToNonVersionedClass(SQLModelTestCase):
             __tablename__ = 'article'
             __versioned__ = {}
 
-            id: Union[int, None] = Field(default=None, primary_key=True)
+            id: int | None = Field(default=None, primary_key=True)
             name: str = Field(sa_type=sa.Unicode(255), nullable=False)
             content: str = Field(sa_type=sa.UnicodeText)
             description: str = Field(sa_type=sa.UnicodeText, default='')
-            author_id: Union[int, None] = Field(
-                sa_type=sa.Integer, foreign_key='user.id'
-            )
+            author_id: int | None = Field(sa_type=sa.Integer, foreign_key='user.id')
             author: User = Relationship(back_populates='articles')
 
         self.Article = Article
@@ -61,10 +59,10 @@ class TestManyToManyRelationshipToNonVersionedClass(SQLModelTestCase):
     def create_models(self):
         class ArticleTagLink(self.Model, table=True):
             __tablename__ = 'article_tag'
-            article_id: Union[int, None] = Field(
+            article_id: int | None = Field(
                 default=None, foreign_key='article.id', primary_key=True
             )
-            tag_id: Union[int, None] = Field(
+            tag_id: int | None = Field(
                 default=None, foreign_key='tag.id', primary_key=True
             )
 
@@ -72,7 +70,7 @@ class TestManyToManyRelationshipToNonVersionedClass(SQLModelTestCase):
             __tablename__ = 'article'
             __versioned__ = {}
 
-            id: Union[int, None] = Field(default=None, primary_key=True)
+            id: int | None = Field(default=None, primary_key=True)
             name: str = Field(max_length=255)
             content: str = Field(default='')
             tags: list['Tag'] = Relationship(
@@ -82,7 +80,7 @@ class TestManyToManyRelationshipToNonVersionedClass(SQLModelTestCase):
         class Tag(self.Model, table=True):
             __tablename__ = 'tag'
 
-            id: Union[int, None] = Field(default=None, primary_key=True)
+            id: int | None = Field(default=None, primary_key=True)
             name: str = Field(max_length=255)
             articles: list[Article] = Relationship(
                 back_populates='tags', link_model=ArticleTagLink

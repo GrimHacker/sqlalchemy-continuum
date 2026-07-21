@@ -4,7 +4,7 @@ import sqlalchemy as sa
 from sqlalchemy.ext.declarative import declared_attr
 from sqlalchemy.orm import column_property
 
-from .utils import adapt_columns, option, declarative_base_resolver
+from .utils import adapt_columns, declarative_base_resolver, option
 from .version import VersionClassBase
 
 

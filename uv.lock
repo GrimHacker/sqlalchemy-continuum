@@ -973,6 +973,8 @@ test = [
     { name = "psycopg2" },
     { name = "pymysql" },
     { name = "pytest" },
+]
+test-sqlmodel = [
     { name = "sqlmodel" },
 ]
 
@@ -1015,8 +1017,8 @@ test = [
     { name = "psycopg2", specifier = ">=2.9" },
     { name = "pymysql", specifier = ">=1.0" },
     { name = "pytest", specifier = ">=7.0" },
-    { name = "sqlmodel", specifier = ">=0.0.24" },
 ]
+test-sqlmodel = [{ name = "sqlmodel", specifier = ">=0.0.24" }]
 
 [[package]]
 name = "sqlmodel"

@@ -1,8 +1,10 @@
+from typing import Union
+
+import sqlalchemy as sa
 from sqlmodel import Field, Relationship
+
 from tests import create_test_cases
 from tests.sqlmodel import SQLModelTestCase
-import sqlalchemy as sa
-from typing import Union
 
 
 class OneToOneRelationshipsTestCase(SQLModelTestCase):
@@ -11,9 +13,7 @@ class OneToOneRelationshipsTestCase(SQLModelTestCase):
             __tablename__ = 'user'
             __versioned__ = {}
 
-            id: Union[int, None] = Field(
-                sa_type=sa.Integer, default=None, primary_key=True
-            )
+            id: int | None = Field(sa_type=sa.Integer, default=None, primary_key=True)
             name: str = Field(sa_type=sa.Unicode(255))
             articles: list['Article'] = Relationship(back_populates='author')
 
@@ -21,13 +21,11 @@ class OneToOneRelationshipsTestCase(SQLModelTestCase):
             __tablename__ = 'article'
             __versioned__ = {}
 
-            id: Union[int, None] = Field(default=None, primary_key=True)
+            id: int | None = Field(default=None, primary_key=True)
             name: str = Field(sa_type=sa.Unicode(255), nullable=False)
             content: str = Field(sa_type=sa.UnicodeText)
             description: str = Field(sa_type=sa.UnicodeText, default='')
-            author_id: Union[int, None] = Field(
-                sa_type=sa.Integer, foreign_key='user.id'
-            )
+            author_id: int | None = Field(sa_type=sa.Integer, foreign_key='user.id')
             author: User = Relationship(back_populates='articles')
 
         self.Article = Article

@@ -113,8 +113,11 @@ test = [
     "Flask>=2.0",
     "Flask-Login>=0.6",
     "Flask-SQLAlchemy>=3.0",
-    "SQLModel>=0.0.24",
     "packaging",
+]
+# SQLModel requires SQLAlchemy >= 2.0; install only on SA 2.x test legs (see tox/CI).
+test-sqlmodel = [
+    "SQLModel>=0.0.24",
 ]
 docs = [
     "zensical>=0.0.46",
@@ -125,6 +128,7 @@ lint = [
 ]
 dev = [
     { include-group = "test" },
+    { include-group = "test-sqlmodel" },
     { include-group = "docs" },
     { include-group = "lint" },
     "tox>=4.27",
