@@ -1,10 +1,11 @@
-import pytest
 from typing import Union
-from pytest import mark
-import sqlalchemy as sa
-from sqlmodel import Field, Relationship
-from sqlalchemy_continuum import versioning_manager
 
+import pytest
+import sqlalchemy as sa
+from pytest import mark
+from sqlmodel import Field, Relationship
+
+from sqlalchemy_continuum import versioning_manager
 from tests import create_test_cases
 from tests.sqlmodel import SQLModelTestCase
 
@@ -13,10 +14,10 @@ class ManyToManyRelationshipsTestCase(SQLModelTestCase):
     def create_models(self):
         class ArticleTagLink(self.Model, table=True):
             __tablename__ = 'article_tag'
-            article_id: Union[int, None] = Field(
+            article_id: int | None = Field(
                 default=None, foreign_key='article.id', primary_key=True
             )
-            tag_id: Union[int, None] = Field(
+            tag_id: int | None = Field(
                 default=None, foreign_key='tag.id', primary_key=True
             )
 
@@ -24,7 +25,7 @@ class ManyToManyRelationshipsTestCase(SQLModelTestCase):
             __tablename__ = 'article'
             __versioned__ = {}
 
-            id: Union[int, None] = Field(default=None, primary_key=True)
+            id: int | None = Field(default=None, primary_key=True)
             name: str = Field(max_length=255)
             content: str = Field(default='')
             tags: list['Tag'] = Relationship(
@@ -35,7 +36,7 @@ class ManyToManyRelationshipsTestCase(SQLModelTestCase):
             __tablename__ = 'tag'
             __versioned__ = {}
 
-            id: Union[int, None] = Field(default=None, primary_key=True)
+            id: int | None = Field(default=None, primary_key=True)
             name: str = Field(max_length=255)
             articles: list[Article] = Relationship(
                 back_populates='tags', link_model=ArticleTagLink
@@ -202,10 +203,10 @@ class TestManyToManyRelationshipWithViewOnly(SQLModelTestCase):
     def create_models(self):
         class ArticleTagLink(self.Model, table=True):
             __tablename__ = 'article_tag'
-            article_id: Union[int, None] = Field(
+            article_id: int | None = Field(
                 default=None, foreign_key='article.id', primary_key=True
             )
-            tag_id: Union[int, None] = Field(
+            tag_id: int | None = Field(
                 default=None, foreign_key='tag.id', primary_key=True
             )
 
@@ -213,7 +214,7 @@ class TestManyToManyRelationshipWithViewOnly(SQLModelTestCase):
             __tablename__ = 'article'
             __versioned__ = {}
 
-            id: Union[int, None] = Field(default=None, primary_key=True)
+            id: int | None = Field(default=None, primary_key=True)
             name: str = Field(max_length=255)
             content: str = Field(default='')
             tags: list['Tag'] = Relationship(
@@ -226,7 +227,7 @@ class TestManyToManyRelationshipWithViewOnly(SQLModelTestCase):
             __tablename__ = 'tag'
             __versioned__ = {}
 
-            id: Union[int, None] = Field(default=None, primary_key=True)
+            id: int | None = Field(default=None, primary_key=True)
             name: str = Field(max_length=255)
             articles: list[Article] = Relationship(
                 back_populates='tags',
@@ -246,10 +247,10 @@ class TestManyToManySelfReferential(SQLModelTestCase):
     def create_models(self):
         class ArticleReferences(self.Model, table=True):
             __tablename__ = 'article_references'
-            referring_id: Union[int, None] = Field(
+            referring_id: int | None = Field(
                 default=None, foreign_key='article.id', primary_key=True
             )
-            referred_id: Union[int, None] = Field(
+            referred_id: int | None = Field(
                 default=None, foreign_key='article.id', primary_key=True
             )
 
@@ -257,7 +258,7 @@ class TestManyToManySelfReferential(SQLModelTestCase):
             __tablename__ = 'article'
             __versioned__ = {}
 
-            id: Union[int, None] = Field(default=None, primary_key=True)
+            id: int | None = Field(default=None, primary_key=True)
             name: str = Field(max_length=255)
             content: str = Field(default='')
             references: list['Article'] = Relationship(

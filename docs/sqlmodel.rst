@@ -3,6 +3,15 @@ SQLModel support
 
 As of version 1.5 SQLAlchemy-Continuum supports models defined via SQLModel library.
 
+Notice that using SQLModel requires SQLAlchemy >= 2.0. By enabling an optional dependency group `sqlmodel`,
+you will get the check for required SQLAlchemy version.
+
+
+```bash
+pip install sqlalchemy-continuum[sqlmodel]
+```
+
+
 Usage
 -----
 

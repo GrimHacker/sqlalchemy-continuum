@@ -1,9 +1,10 @@
 from datetime import datetime
+from typing import Union
 
 import sqlalchemy as sa
 from sqlmodel import Field, SQLModel
+
 from tests.sqlmodel import SQLModelTestCase
-from typing import Union
 
 
 class TestUpdateSQLModel(SQLModelTestCase):
@@ -78,7 +79,7 @@ class TestUpdateWithDefaultValuesSQLModel(SQLModelTestCase):
         class Article(self.Model, table=True):
             __tablename__ = 'article'
             __versioned__ = {}
-            id: Union[int, None] = Field(default=None, primary_key=True)
+            id: int | None = Field(default=None, primary_key=True)
             name: str = Field(sa_type=sa.Unicode(255), nullable=False)
             updated_at: datetime = Field(
                 sa_type=sa.DateTime, sa_column_kwargs={'server_default': sa.func.now()}
